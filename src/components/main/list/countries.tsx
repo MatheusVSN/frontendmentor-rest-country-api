@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 
 interface CountryCardProps {
   Flag: string;
@@ -7,6 +8,7 @@ interface CountryCardProps {
   Population: number;
   Region: string;
   Capital: string[];
+  Object: Object[];
 }
 
 function CountryCardComponent({
@@ -16,6 +18,7 @@ function CountryCardComponent({
   Population,
   Region,
   Capital,
+  Object,
 }: CountryCardProps) {
   return (
     <div className="flex flex-col drop-shadow-md transition hover:scale-105 hover:cursor-pointer">
@@ -54,7 +57,17 @@ function LoadingCardComponent() {
   );
 }
 
-export default function CountriesList({ countries, loading, query, region }: {countries: [], loading: boolean, query: string, region: string}) {
+export default function CountriesList({
+  countries,
+  loading,
+  query,
+  region,
+}: {
+  countries: [];
+  loading: boolean;
+  query: string;
+  region: string;
+}) {
   if (loading) return <h1>Loading</h1>;
 
   function FilterCountries() {
@@ -76,12 +89,18 @@ export default function CountriesList({ countries, loading, query, region }: {co
           Population: index.population,
           Region: index.region,
           Capital: index.capital,
+          Object: index,
         };
         return (
-          <CountryCardComponent
-            key={index.name.official}
-            {...CountryProperties}
-          />
+          <Link
+            href={{
+              pathname: "/country/[country]",
+              query: { information: JSON.stringify(index) },
+            }}
+            key={index.name.common}
+          >
+            <CountryCardComponent {...CountryProperties} />
+          </Link>
         );
       })}
     </div>
