@@ -1,49 +1,83 @@
 import Image from "next/image";
-import CallCountriesAPI from "@/hooks/request-countries"
+import CallCountriesAPI from "@/hooks/request-countries";
 
 interface CountryCardProps {
-    Flag: string;
-    FlagAlt: string;
-    Name: string;
-    Population: number;
-    Region: string;
-    Capital: string[];
+  Flag: string;
+  FlagAlt: string;
+  Name: string;
+  Population: number;
+  Region: string;
+  Capital: string[];
 }
 
-function CountryCardComponent({Flag, FlagAlt, Name, Population, Region, Capital} : CountryCardProps) {
-    return (
-        <div className="flex flex-col">
-            <Image className="rounded-t-md w-full h-[200px] object-cover" src={Flag} alt={FlagAlt} width={300} height={200} />
-            <div className="bg-white dark:bg-very-dark-blue rounded-b-md p-8 gap-y-4">
-                <h2 className="font-bold text-xl mb-4 w-full">{Name}</h2>
-                <p><b className="font-semibold">Population: </b>{Population}</p>
-                <p><b className="font-semibold">Region: </b>{Region}</p>
-                <p><b className="font-semibold">Capital: </b>{Capital}</p>
-            </div>
-        </div>
-    )
+function CountryCardComponent({
+  Flag,
+  FlagAlt,
+  Name,
+  Population,
+  Region,
+  Capital,
+}: CountryCardProps) {
+  return (
+    <div className="flex flex-col drop-shadow-md">
+      <Image
+        className="rounded-t-md w-full h-[200px] object-cover"
+        src={Flag}
+        alt={FlagAlt}
+        width={300}
+        height={200}
+      />
+      <div className="bg-white dark:bg-very-dark-blue rounded-b-md p-8 gap-y-4 h-[225px]">
+        <h2 className="font-bold text-xl mb-4 w-full">{Name}</h2>
+        <p>
+          <b className="font-semibold">Population: </b>
+          {Population}
+        </p>
+        <p>
+          <b className="font-semibold">Region: </b>
+          {Region}
+        </p>
+        <p>
+          <b className="font-semibold">Capital: </b>
+          {Capital}
+        </p>
+      </div>
+    </div>
+  );
+}
+
+function LoadingCardComponent() {
+  return (
+    <div className="flex flex-col">
+      <div className="bg-slate-200 h-[200px] w-[300px] rounded-t-md"></div>
+      <div className="bg-slate-100 h-[225px] w-[300px] rounded-b-md"></div>
+    </div>
+  );
 }
 
 export default function CountriesList() {
-    const { countries, loading } = CallCountriesAPI();
+  const { countries, loading } = CallCountriesAPI();
 
-    if(loading) return <h1>Loading...</h1>
+  console.log(countries);
 
-    console.log(countries);
-
-    return (
-        <div className="mt-8 px-8 grid place-content-center md:grid-cols-4 gap-8">
-            {countries.slice(0, 8).map(index => {
-                const CountryProperties = {
-                    Flag: index.flags.svg,
-                    FlagAlt: index.flags.alt,
-                    Name: index.name.official,
-                    Population: index.population,
-                    Region: index.region,
-                    Capital: index.capital
-                }
-                return <CountryCardComponent key={index.name.official} {...CountryProperties}/>
-            })}
-        </div>
-    )
+  return (
+    <div className="mt-8 px-8 grid place-content-center md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+      {countries.map((index) => {
+        const CountryProperties = {
+          Flag: index.flags.svg,
+          FlagAlt: index.flags.alt,
+          Name: index.name.official,
+          Population: index.population,
+          Region: index.region,
+          Capital: index.capital,
+        };
+        return (
+          <CountryCardComponent
+            key={index.name.official}
+            {...CountryProperties}
+          />
+        );
+      })}
+    </div>
+  );
 }

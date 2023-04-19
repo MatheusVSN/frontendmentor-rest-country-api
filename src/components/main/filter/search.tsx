@@ -16,7 +16,7 @@ const RegionsList: Region[] = [
 
 export default function SearchComponent() {
   return (
-    <div className="mt-8 px-8 flex max-md:flex-col gap-y-12">
+    <div className="mt-8 px-8 flex max-lg:flex-col gap-y-12">
       {/* Search bar */}
       <div className="flex items-center gap-x-4 bg-white dark:bg-very-dark-blue drop-shadow-md h-14 rounded-md px-8 md:w-[500px]">
         <BiSearch />
@@ -27,7 +27,7 @@ export default function SearchComponent() {
       </div>
 
       {/* Region filter */}
-      <div className="h-14 w-64 bg-white dark:bg-very-dark-blue drop-shadow-md flex items-center rounded-md md:ml-auto">
+      <div className="h-14 w-64 bg-white dark:bg-very-dark-blue drop-shadow-md flex items-center rounded-md lg:ml-auto">
         <select defaultValue="" id="region" className="appearance-none bg-white dark:bg-very-dark-blue w-full h-full px-4 rounded-md outline-none">
           <option value="" disabled hidden>
             Filter by region
