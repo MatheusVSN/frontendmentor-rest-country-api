@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/router";
 
 interface CountryCardProps {
   Flag: string;
@@ -92,13 +93,7 @@ export default function CountriesList({
           Object: index,
         };
         return (
-          <Link
-            href={{
-              pathname: "/country/[country]",
-              query: { information: JSON.stringify(index) },
-            }}
-            key={index.name.common}
-          >
+          <Link href={"/country/[country]"} key={index.name.common} >
             <CountryCardComponent {...CountryProperties} />
           </Link>
         );
