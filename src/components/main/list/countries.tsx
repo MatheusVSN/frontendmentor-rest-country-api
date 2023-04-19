@@ -1,5 +1,4 @@
 import Image from "next/image";
-import CallCountriesAPI from "@/hooks/request-countries";
 
 interface CountryCardProps {
   Flag: string;
@@ -19,7 +18,7 @@ function CountryCardComponent({
   Capital,
 }: CountryCardProps) {
   return (
-    <div className="flex flex-col drop-shadow-md">
+    <div className="flex flex-col drop-shadow-md transition hover:scale-105 hover:cursor-pointer">
       <Image
         className="rounded-t-md w-full h-[200px] object-cover"
         src={Flag}
@@ -55,18 +54,25 @@ function LoadingCardComponent() {
   );
 }
 
-export default function CountriesList() {
-  const { countries, loading } = CallCountriesAPI();
+export default function CountriesList({ countries, loading, query, region }: {countries: [], loading: boolean, query: string, region: string}) {
+  if (loading) return <h1>Loading</h1>;
 
-  console.log(countries);
+  function FilterCountries() {
+    return countries.filter((country) => {
+      return (
+        country.name.common.toLowerCase().includes(query.toLowerCase()) &&
+        country.region.toLowerCase().includes(region.toLowerCase())
+      );
+    });
+  }
 
   return (
     <div className="mt-8 px-8 grid place-content-center md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
-      {countries.map((index) => {
+      {FilterCountries().map((index) => {
         const CountryProperties = {
           Flag: index.flags.svg,
           FlagAlt: index.flags.alt,
-          Name: index.name.official,
+          Name: index.name.common,
           Population: index.population,
           Region: index.region,
           Capital: index.capital,
