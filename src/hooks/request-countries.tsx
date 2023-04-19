@@ -6,9 +6,7 @@ export default function CallCountriesAPI() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch("https://restcountries.com/v3.1/all", {
-      signal: abortController.signal,
-    }).then((response) => {
+    fetch("https://restcountries.com/v3.1/all").then((response) => {
       if (response.status != 200) {
         return;
       }
