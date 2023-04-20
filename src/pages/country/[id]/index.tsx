@@ -5,16 +5,40 @@ import Link from "next/link";
 
 import { BsArrowLeft } from "react-icons/bs";
 
-import CallCountriesAPI from "@/hooks/request-countries";
-
 import Navbar from "@/components/header/navbar";
+
+interface ContextType {
+  params: {
+    id: string;
+  };
+}
+
+interface CountryProperties {
+  flags: {
+    svg: string;
+    png: string;
+    alt: string;
+  };
+  name: {
+    common: string;
+  };
+  altSpellings: string[];
+  population: number;
+  region: string;
+  subregion: string;
+  capital: string;
+  tld: string[];
+  currencies: Object;
+  languages: string[];
+  borders: string[];
+}
 
 function TextComponent({
   Information,
   Value,
 }: {
   Information: string;
-  Value: number;
+  Value: string | number;
 }) {
   return (
     <p className="text-xl">
@@ -41,19 +65,23 @@ function MultipleTextComponent({
 
 function BorderCountryComponent({ Name }: { Name: string }) {
   return (
-    <Link className="h-12 w-32 px-4 flex items-center gap-4 bg-white dark:bg-very-dark-blue rounded-sm drop-shadow-md" href={`/country/${Name}`}>
-      <button className="h-full w-full">
-        {Name}
-      </button>
+    <Link
+      className="h-12 w-32 px-4 flex items-center gap-4 bg-white dark:bg-very-dark-blue rounded-sm drop-shadow-md"
+      href={`/country/${Name}`}
+    >
+      <button className="h-full w-full">{Name}</button>
     </Link>
   );
 }
 
-export default function CountryPage(props: { country: Object }) {
-  const country = props.country[0];
+export default function CountryPage(props: { country: any[] }) {
+  const country: CountryProperties = props.country[0];
 
   return (
     <>
+      <Head>
+        <title>{country.name.common} - Information</title>
+      </Head>
       <Navbar />
       <div className="mt-8 px-8">
         <Link href={"/"}>
@@ -117,7 +145,7 @@ export default function CountryPage(props: { country: Object }) {
   );
 }
 
-export async function getServerSideProps(context: any) {
+export async function getServerSideProps(context: ContextType) {
   const { id } = context.params;
   const res = await fetch(`https://restcountries.com/v3.1/alpha/${id}`);
   const country = await res.json();
