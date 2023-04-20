@@ -93,7 +93,13 @@ export default function CountriesList({
           Object: index,
         };
         return (
-          <Link href={"/country/[country]"} key={index.name.common} >
+          <Link
+            href={{
+              pathname: `/country/[country]`,
+              query: { country: index.cca3 },
+            }}
+            key={index.name.common}
+          >
             <CountryCardComponent {...CountryProperties} />
           </Link>
         );
