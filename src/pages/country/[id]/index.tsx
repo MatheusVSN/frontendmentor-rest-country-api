@@ -127,7 +127,7 @@ export default function CountryPage(props: { country: any[] }) {
             <div className="mt-4"></div>
             <p className="font-bold text-2xl mb-4">Border Countries:</p>
 
-            <div className="flex flex-row flex-wrap gap-4 w-full">
+            <div className="flex flex-row flex-wrap items-center gap-4 w-full">
               {country.borders ? (
                 country.borders.map((border: string) => {
                   return <BorderCountryComponent key={border} Name={border} />;
