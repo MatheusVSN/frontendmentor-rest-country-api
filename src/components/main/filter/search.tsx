@@ -44,13 +44,15 @@ export default function SearchComponent({
 
       {/* Region filter */}
       <div className="h-14 w-64 bg-white dark:bg-very-dark-blue drop-shadow-md flex items-center rounded-md lg:ml-auto">
+        <label className="sr-only" htmlFor="region">Filter by region:</label>
         <select
           defaultValue=""
           onChange={(e) => onFilterChange(e.target.value)}
           id="region"
           className="appearance-none bg-white dark:bg-very-dark-blue w-full h-full px-4 rounded-md outline-none"
+          aria-label="Filter by region"
         >
-          <option value="" disabled hidden>
+          <option value="" disabled selected>
             Filter by region
           </option>
           {RegionsList.map((region) => {
