@@ -1,10 +1,14 @@
 import Navbar from "@/components/header/navbar";
 import Link from "next/link";
 import { BsArrowLeft } from "react-icons/bs";
+import Head from "next/head";
 
 export default function Page404() {
   return (
     <>
+    <Head>
+      <title>404 Error - Page not found</title>
+    </Head>
       <Navbar />
       <main className="fixed left-[50%] top-[50%] translate-x-[-50%] translate-y-[-50%] flex flex-col items-center gap-4">
         <h1 className="text-lg font-bold">The page you are looking forward does not exist</h1>
