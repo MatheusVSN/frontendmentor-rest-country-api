@@ -80,7 +80,7 @@ export default function CountryPage(props: { country: any[] }) {
   return (
     <>
       <Head>
-        <title>{country.name.common} - Information</title>
+        <title>{country.name.common}</title>
       </Head>
       <Navbar />
       <div className="mt-8 px-8">
@@ -90,54 +90,73 @@ export default function CountryPage(props: { country: any[] }) {
             Go back
           </button>
         </Link>
-        <div className="grid place-content-center">
-          <div className="mt-8 px-8 flex flex-col gap-y-4">
+        <div className="grid">
+          <div className="mt-8 flex max-lg:flex-col gap-y-4 gap-x-16">
             <Image
-              className="max-md:w-full"
+              className="max-lg:w-full lg:aspect-video"
               src={country.flags.svg}
               alt={country.flags.alt}
               width={500}
               height={300}
             />
-            <p className="font-bold text-3xl mb-4">{country.name.common}</p>
-            <TextComponent
-              Information="Native name"
-              Value={country.altSpellings[1]}
-            />
-            <TextComponent
-              Information="Population"
-              Value={country.population}
-            />
-            <TextComponent Information="Region" Value={country.region} />
-            <TextComponent Information="Sub Region" Value={country.subregion} />
-            <TextComponent Information="Capital" Value={country.capital} />
-            <div className="mt-4"></div>
-            <TextComponent
-              Information="Top Level Domain"
-              Value={country.tld[0]}
-            />
-            <TextComponent
-              Information="Currencies"
-              Value={Object.values(country.currencies)[0].name}
-            />
-            <MultipleTextComponent
-              Information="Languages"
-              Value={country.languages}
-            />
-            <div className="mt-4"></div>
-            <p className="font-bold text-2xl mb-4">Border Countries:</p>
+            <div className="lg:grid">
+              <div className="lg:flex gap-x-16">
+                <div className="grid">
+                  <p className="font-bold text-3xl mb-4">
+                    {country.name.common}
+                  </p>
+                  <TextComponent
+                    Information="Native name"
+                    Value={country.altSpellings[1]}
+                  />
+                  <TextComponent
+                    Information="Population"
+                    Value={country.population}
+                  />
+                  <TextComponent Information="Region" Value={country.region} />
+                  <TextComponent
+                    Information="Sub Region"
+                    Value={country.subregion}
+                  />
+                  <TextComponent
+                    Information="Capital"
+                    Value={country.capital}
+                  />
+                </div>
+                <div className="max-lg:mt-4">
+                  <TextComponent
+                    Information="Top Level Domain"
+                    Value={country.tld[0]}
+                  />
+                  <TextComponent
+                    Information="Currencies"
+                    Value={Object.values(country.currencies)[0].name}
+                  />
+                  <MultipleTextComponent
+                    Information="Languages"
+                    Value={country.languages}
+                  />
+                  <div className="mt-4"></div>
+                </div>
+              </div>
+              <p className="font-bold text-2xl mb-4 lg:mt-16">
+                Border Countries:
+              </p>
 
-            <div className="flex flex-row flex-wrap items-center gap-4 w-full">
-              {country.borders ? (
-                country.borders.map((border: string) => {
-                  return <BorderCountryComponent key={border} Name={border} />;
-                })
-              ) : (
-                <p className="text-xl">No border countries</p>
-              )}
+              <div className="flex flex-row flex-wrap items-center gap-4 w-full">
+                {country.borders ? (
+                  country.borders.map((border: string) => {
+                    return (
+                      <BorderCountryComponent key={border} Name={border} />
+                    );
+                  })
+                ) : (
+                  <p className="text-xl">No border countries</p>
+                )}
+              </div>
+
+              <div className="mt-8"></div>
             </div>
-
-            <div className="mt-8"></div>
           </div>
         </div>
       </div>

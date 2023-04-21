@@ -13,17 +13,17 @@ interface CountryCardProps {
 
 interface CountryProps {
   flags: {
-    png: string,
-    svg: string,
-    alt: string
-  },
-  cca3: string,
+    png: string;
+    svg: string;
+    alt: string;
+  };
+  cca3: string;
   name: {
-    common: string
-  },
-  population: number,
-  region: string,
-  capital: string,
+    common: string;
+  };
+  population: number;
+  region: string;
+  capital: string;
 }
 
 function CountryCardComponent({
@@ -65,8 +65,8 @@ function CountryCardComponent({
 function LoadingCardComponent() {
   return (
     <div className="flex flex-col">
-      <div className="bg-slate-200 h-[200px] w-[300px] rounded-t-md"></div>
-      <div className="bg-slate-100 h-[225px] w-[300px] rounded-b-md"></div>
+      <div className="bg-slate-200 dark:bg-slate-800 h-[200px] w-auto rounded-t-md animate-pulse"></div>
+      <div className="bg-slate-100 dark:bg-slate-700 h-[225px] w-auto rounded-b-md animate-pulse"></div>
     </div>
   );
 }
@@ -82,7 +82,17 @@ export default function CountriesList({
   query: string;
   region: string;
 }) {
-  if (loading) return <h1>Loading</h1>;
+  if (loading) {
+    return (
+      <>
+        <div className="mt-8 px-8 grid place-content-center md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+          {[...Array(8).keys()].map((index) => {
+            return <LoadingCardComponent key={index} />;
+          })}
+        </div>
+      </>
+    );
+  }
 
   function FilterCountries() {
     return countries.filter((country: CountryProps) => {
@@ -95,7 +105,7 @@ export default function CountriesList({
 
   return (
     <div className="mt-8 px-8 grid place-content-center md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
-      {FilterCountries().map((index : CountryProps) => {
+      {FilterCountries().map((index: CountryProps) => {
         const CountryProperties = {
           Flag: index.flags.svg,
           FlagAlt: index.flags.alt,
